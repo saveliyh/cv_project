@@ -10,17 +10,18 @@ train_transform = v2.Compose(
         # v2.RandomAffine(degrees=10, translate=(0.1, 0.1), scale=(0.9, 1.1)),
         # v2.RandomPerspective(),
         # v2.ElasticTransform(),
-        v2.GaussianBlur(),
+        v2.GaussianBlur((3, 3)),
         v2.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
         v2.Grayscale(),
-        v2.Lambda(lambda x: cv2.Canny(x, 100, 200)),
+        # v2.Lambda(lambda x: cv2.Canny(x.numpy(), 100, 200)),
+        v2.ToImage(),
     ]
 )
 
 test_transform = v2.Compose(
     [
         v2.ToImage(),
-        v2.GaussianBlur(),
+        v2.GaussianBlur((3, 3)),
         v2.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
         v2.Grayscale(),
         v2.Lambda(lambda x: cv2.Canny(x, 100, 200)),
